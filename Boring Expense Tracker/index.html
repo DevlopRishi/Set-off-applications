@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Personal Finance Tracker</title>
+    <title>Chaotic Expense Tracker</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -40,73 +40,6 @@
             border-radius: 8px;
         }
 
-        .finance-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .finance-section {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .input-group input, 
-        .input-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        #transactionList, 
-        #savingsList {
-            margin-top: 20px;
-        }
-
-        .transaction-item, 
-        .savings-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .transaction-item.income {
-            background-color: #e6f3e6;
-        }
-
-        .transaction-item.expense {
-            background-color: #f3e6e6;
-        }
-
         #summaryStats {
             display: flex;
             justify-content: space-between;
@@ -120,6 +53,52 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             width: 30%;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(2000px);
+        }
+
+        .finance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .finance-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-moving {
+            position: relative;
+            animation: move 0.5s infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(20px, 10px); }
+            50% { transform: translate(-10px, -20px); }
+            75% { transform: translate(-20px, 20px); }
+            100% { transform: translate(10px, -10px); }
         }
 
         @media (max-width: 768px) {
@@ -134,292 +113,83 @@
                 margin-bottom: 10px;
             }
         }
+
+        .chaos {
+            font-size: 14px;
+            color: red;
+            transform: rotate(-15deg);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="app-header">
-            <h1>Personal Finance Tracker</h1>
+            <h1>Chaotic $$$ Tracker (w/ Gravity!)</h1>
         </header>
 
         <div id="summaryStats">
             <div class="stat-card">
-                <h3>Total Income</h3>
-                <p id="totalIncome">$0</p>
+                <h3>Total Income? Maybe.</h3>
+                <p id="totalIncome">$000.00</p>
             </div>
             <div class="stat-card">
-                <h3>Total Expenses</h3>
-                <p id="totalExpenses">$0</p>
+                <h3>Where's My Money?</h3>
+                <p id="totalExpenses">$000.00</p>
             </div>
             <div class="stat-card">
-                <h3>Net Balance</h3>
-                <p id="netBalance">$0</p>
+                <h3>Net Balance... Or?</h3>
+                <p id="netBalance">$ERROR</p>
             </div>
         </div>
 
         <div class="finance-grid">
             <div class="finance-section">
-                <h2>Add Transaction</h2>
+                <h2>Add Thingy!</h2>
                 <form id="transactionForm">
                     <div class="input-group">
-                        <label for="transactionType">Type</label>
+                        <label>Type (We care?)</label>
                         <select id="transactionType" required>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
+                            <option value="income">Nice Money</option>
+                            <option value="expense">Oh No!</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="transactionCategory">Category</label>
-                        <select id="transactionCategory" required>
-                            <optgroup label="Income">
-                                <option value="salary">Salary</option>
-                                <option value="freelance">Freelance</option>
-                                <option value="investments">Investments</option>
-                                <option value="other-income">Other Income</option>
-                            </optgroup>
-                            <optgroup label="Expenses">
-                                <option value="rent">Rent</option>
-                                <option value="groceries">Groceries</option>
-                                <option value="utilities">Utilities</option>
-                                <option value="transportation">Transportation</option>
-                                <option value="entertainment">Entertainment</option>
-                                <option value="dining-out">Dining Out</option>
-                                <option value="shopping">Shopping</option>
-                                <option value="other-expense">Other Expense</option>
-                            </optgroup>
-                        </select>
+                        <label>Category (Who even does this?)</label>
+                        <input type="text" id="transactionCategory" required>
                     </div>
                     <div class="input-group">
-                        <label for="transactionAmount">Amount ($)</label>
-                        <input type="number" id="transactionAmount" min="0" step="0.01" required>
+                        <label>Amount (USD because why not)</label>
+                        <input type="number" id="transactionAmount" min="0" required>
                     </div>
-                    <div class="input-group">
-                        <label for="transactionDate">Date</label>
-                        <input type="date" id="transactionDate" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="transactionNote">Note (Optional)</label>
-                        <input type="text" id="transactionNote">
-                    </div>
-                    <button type="submit" class="btn">Add Transaction</button>
+                    <button type="submit" class="btn btn-moving">Submit Before It Moves!</button>
                 </form>
             </div>
 
             <div class="finance-section">
-                <h2>Savings Goals</h2>
+                <h2>Savings Goals (Pfft, Sure)</h2>
                 <form id="savingsGoalForm">
                     <div class="input-group">
-                        <label for="savingsGoalName">Goal Name</label>
+                        <label>Goal Name (Dream Big)</label>
                         <input type="text" id="savingsGoalName" required>
                     </div>
                     <div class="input-group">
-                        <label for="savingsGoalTarget">Target Amount ($)</label>
-                        <input type="number" id="savingsGoalTarget" min="0" step="0.01" required>
+                        <label>Amount (Bet You Won't Reach)</label>
+                        <input type="number" id="savingsGoalTarget" min="0" required>
                     </div>
-                    <div class="input-group">
-                        <label for="savingsGoalDeadline">Target Date</label>
-                        <input type="date" id="savingsGoalDeadline" required>
-                    </div>
-                    <button type="submit" class="btn">Add Savings Goal</button>
+                    <button type="submit" class="btn">Add Goal!</button>
                 </form>
-
-                <div id="savingsList">
-                    <h3>Current Savings Goals</h3>
-                </div>
             </div>
         </div>
 
-        <div class="finance-section" style="margin-top: 20px;">
-            <h2>Transaction History</h2>
-            <div id="transactionList"></div>
-        </div>
+        <script>
+            document.querySelectorAll('.btn-moving').forEach(btn => {
+                btn.addEventListener('mouseover', () => {
+                    const x = Math.random() * 200 - 100;
+                    const y = Math.random() * 200 - 100;
+                    btn.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        </script>
     </div>
-
-    <script>
-        class FinanceTracker {
-            constructor() {
-                this.transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-                this.savingsGoals = JSON.parse(localStorage.getItem('savingsGoals')) || [];
-                this.initEventListeners();
-                this.renderTransactions();
-                this.renderSavingsGoals();
-                this.updateSummaryStats();
-            }
-
-            initEventListeners() {
-                document.getElementById('transactionForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.addTransaction();
-                });
-
-                document.getElementById('savingsGoalForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.addSavingsGoal();
-                });
-            }
-
-            addTransaction() {
-                const type = document.getElementById('transactionType').value;
-                const category = document.getElementById('transactionCategory').value;
-                const amount = parseFloat(document.getElementById('transactionAmount').value);
-                const date = document.getElementById('transactionDate').value;
-                const note = document.getElementById('transactionNote').value;
-
-                const transaction = {
-                    id: Date.now(),
-                    type,
-                    category,
-                    amount,
-                    date,
-                    note
-                };
-
-                this.transactions.push(transaction);
-                this.saveTransactions();
-                this.renderTransactions();
-                this.updateSummaryStats();
-                this.resetTransactionForm();
-            }
-
-            addSavingsGoal() {
-                const name = document.getElementById('savingsGoalName').value;
-                const target = parseFloat(document.getElementById('savingsGoalTarget').value);
-                const deadline = document.getElementById('savingsGoalDeadline').value;
-
-                const savingsGoal = {
-                    id: Date.now(),
-                    name,
-                    target,
-                    deadline,
-                    currentSaved: 0
-                };
-
-                this.savingsGoals.push(savingsGoal);
-                this.saveSavingsGoals();
-                this.renderSavingsGoals();
-                this.resetSavingsGoalForm();
-            }
-
-            renderTransactions() {
-                const transactionList = document.getElementById('transactionList');
-                transactionList.innerHTML = '';
-
-                this.transactions
-                    .sort((a, b) => new Date(b.date) - new Date(a.date))
-                    .forEach(transaction => {
-                        const transactionItem = document.createElement('div');
-                        transactionItem.classList.add('transaction-item', transaction.type);
-                        transactionItem.innerHTML = `
-                            <div>
-                                <strong>${transaction.category}</strong>
-                                <p>${transaction.note || ''}</p>
-                                <small>${transaction.date}</small>
-                            </div>
-                            <div>
-                                <strong>$${transaction.amount.toFixed(2)}</strong>
-                                <button onclick="financeTracker.deleteTransaction(${transaction.id})">🗑️</button>
-                            </div>
-                        `;
-                        transactionList.appendChild(transactionItem);
-                    });
-            }
-
-            renderSavingsGoals() {
-                const savingsList = document.getElementById('savingsList');
-                savingsList.innerHTML = '<h3>Current Savings Goals</h3>';
-
-                this.savingsGoals.forEach(goal => {
-                    const goalItem = document.createElement('div');
-                    goalItem.classList.add('savings-item');
-                    
-                    const progress = (goal.currentSaved / goal.target) * 100;
-                    goalItem.innerHTML = `
-                        <div>
-                            <strong>${goal.name}</strong>
-                            <p>Target: $${goal.target.toFixed(2)} by ${goal.deadline}</p>
-                            <div style="background-color: #e0e0e0; width: 100%; height: 10px; border-radius: 5px;">
-                                <div style="width: ${progress}%; background-color: #2ecc71; height: 100%; border-radius: 5px;"></div>
-                            </div>
-                            <small>Saved: $${goal.currentSaved.toFixed(2)} (${progress.toFixed(2)}%)</small>
-                        </div>
-                        <div>
-                            <button onclick="financeTracker.deleteGoal(${goal.id})">🗑️</button>
-                            <button onclick="financeTracker.addSavings(${goal.id})">💰</button>
-                        </div>
-                    `;
-                    savingsList.appendChild(goalItem);
-                });
-            }
-
-            deleteTransaction(id) {
-                this.transactions = this.transactions.filter(t => t.id !== id);
-                this.saveTransactions();
-                this.renderTransactions();
-                this.updateSummaryStats();
-            }
-
-            deleteGoal(id) {
-                this.savingsGoals = this.savingsGoals.filter(g => g.id !== id);
-                this.saveSavingsGoals();
-                this.renderSavingsGoals();
-            }
-
-            addSavings(goalId) {
-                const savedAmount = parseFloat(prompt('Enter amount to save:'));
-                if (isNaN(savedAmount) || savedAmount <= 0) {
-                    alert('Please enter a valid amount.');
-                    return;
-                }
-
-                const goalIndex = this.savingsGoals.findIndex(g => g.id === goalId);
-                if (goalIndex !== -1) {
-                    this.savingsGoals[goalIndex].currentSaved += savedAmount;
-                    this.saveSavingsGoals();
-                    this.renderSavingsGoals();
-                }
-            }
-
-            updateSummaryStats() {
-                const totalIncome = this.transactions
-                    .filter(t => t.type === 'income')
-                    .reduce((sum, t) => sum + t.amount, 0);
-
-                const totalExpenses = this.transactions
-                    .filter(t => t.type === 'expense')
-                    .reduce((sum, t) => sum + t.amount, 0);
-
-                const netBalance = totalIncome - totalExpenses;
-
-                document.getElementById('totalIncome').textContent = `$${totalIncome.toFixed(2)}`;
-                document.getElementById('totalExpenses').textContent = `$${totalExpenses.toFixed(2)}`;
-                document.getElementById('netBalance').textContent = `$${netBalance.toFixed(2)}`;
-            }
-
-            saveTransactions() {
-                localStorage.setItem('transactions', JSON.stringify(this.transactions));
-            }
-
-            saveSavingsGoals() {
-                localStorage.setItem('savingsGoals', JSON.stringify(this.savingsGoals));
-            }
-
-            resetTransactionForm() {
-                document.getElementById('transactionType').selectedIndex = 0;
-                document.getElementById('transactionCategory').selectedIndex = 0;
-                document.getElementById('transactionAmount').value = '';
-                document.getElementById('transactionDate').value = '';
-                document.getElementById('transactionNote').value = '';
-            }
-
-            resetSavingsGoalForm() {
-                document.getElementById('savingsGoalName').value = '';
-                document.getElementById('savingsGoalTarget').value = '';
-                document.getElementById('savingsGoalDeadline').value = '';
-            }
-        }
-
-        // Initialize the finance tracker
-        const financeTracker = new FinanceTracker();
-    </script>
 </body>
 </html>
