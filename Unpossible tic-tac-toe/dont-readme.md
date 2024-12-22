@@ -1,4 +1,4 @@
-# Evil Tic Tac Toe Game
+# Evil Tic Tac Toe Game (lacs logic)
 
 ## Game Description
 
