@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
-import sys
 
 class CheatingTicTacToe:
     def __init__(self, master):
@@ -9,10 +8,12 @@ class CheatingTicTacToe:
         master.title("Cheating Tic Tac Toe")
 
         self.buttons = []
-        self.board = [["" for _ in range(3)] for _ in range(3)]  # 3x3 grid
+        self.board = [["" for _ in range(3)] for _ in range(3)]
         self.player = "X"
         self.ai = "O"
         self.game_over = False
+        self.ai_cheat_moves = 3 # number of moves to play 'fair'
+        self.moves = 0
         self.create_board()
 
     def create_board(self):
@@ -32,15 +33,19 @@ class CheatingTicTacToe:
               self.board[row][col] = self.player
               self.buttons[row][col].config(text=self.player)
               self.check_win()
+              self.moves+=1
               if not self.game_over:
                 self.ai_move()
-
 
     def ai_move(self):
          if self.game_over:
             return
 
-         best_move = self.find_best_move()
+         if self.moves > self.ai_cheat_moves :
+             best_move = self.find_best_move(cheat = True)
+         else:
+             best_move = self.find_best_move(cheat = False)
+
          row, col = best_move
          
          if row < 0 or row > 4 or col < 0 or col > 4 :
@@ -53,41 +58,74 @@ class CheatingTicTacToe:
              if 0 <= row < 3 and 0 <= col < 3 and  self.board[row][col] != self.ai:
                  self.board[row][col] = self.ai
                  self.buttons[row][col].config(text=self.ai)
-         
+                 
          self.check_win()
+         self.moves +=1
 
-    def find_best_move(self):
-        # First, try to win
-        for row in range(-2,5):
-            for col in range(-2,5):
-                 temp_board = [row[:] for row in self.board] 
-                 if 0 <= row < 3 and 0 <= col < 3:
-                      if temp_board[row][col] == "":
-                         temp_board[row][col] = self.ai
-                 if self.check_win_for_board(temp_board, self.ai):
-                     return (row, col)
-                     
-        # Second, try to block player's win
-        for row in range(-2,5):
-            for col in range(-2,5):
-                 temp_board = [row[:] for row in self.board]
-                 if 0 <= row < 3 and 0 <= col < 3:
-                      if temp_board[row][col] == "":
-                        temp_board[row][col] = self.player
-                 if self.check_win_for_board(temp_board, self.player):
-                    return (row, col)
-                    
-        #Third if there is no blocking or winning, place randomly
-        while True:
-             row = random.randint(-2, 4)
-             col = random.randint(-2, 4)
-             if  0 <= row < 3 and 0 <= col < 3:
-                 if self.board[row][col] == "":
-                     return (row, col)
-                 else:
-                     continue
+    def find_best_move(self, cheat = False):
+        # If the ai should not cheat yet, then use classic logic
+        if not cheat:
+          # First, try to win
+          for row in range(3):
+              for col in range(3):
+                  if self.board[row][col] == "":
+                      temp_board = [row[:] for row in self.board] 
+                      temp_board[row][col] = self.ai
+                      if self.check_win_for_board(temp_board, self.ai):
+                          return (row, col)
+        
+          # Second, try to block player's win
+          for row in range(3):
+            for col in range(3):
+                  if self.board[row][col] == "":
+                      temp_board = [row[:] for row in self.board]
+                      temp_board[row][col] = self.player
+                      if self.check_win_for_board(temp_board, self.player):
+                          return (row, col)
+          
+          #Third if there is no blocking or winning, place randomly
+          while True:
+             row = random.randint(0, 2)
+             col = random.randint(0, 2)
+             if self.board[row][col] == "":
+                 return (row, col)
              else:
-                 return (row,col)
+                continue
+            
+        # else cheat is true, so use cheating logic
+        else:
+
+            # First, try to win
+            for row in range(-2,5):
+                for col in range(-2,5):
+                     temp_board = [row[:] for row in self.board] 
+                     if 0 <= row < 3 and 0 <= col < 3:
+                          if temp_board[row][col] == "":
+                             temp_board[row][col] = self.ai
+                     if self.check_win_for_board(temp_board, self.ai):
+                         return (row, col)
+                         
+            # Second, try to block player's win
+            for row in range(-2,5):
+                for col in range(-2,5):
+                     temp_board = [row[:] for row in self.board]
+                     if 0 <= row < 3 and 0 <= col < 3:
+                          if temp_board[row][col] == "":
+                            temp_board[row][col] = self.player
+                     if self.check_win_for_board(temp_board, self.player):
+                        return (row, col)
+                        
+            #Third if there is no blocking or winning, place randomly
+            while True:
+                 row = random.randint(-2, 4)
+                 col = random.randint(-2, 4)
+                 if  0 <= row < 3 and 0 <= col < 3:
+                     if self.board[row][col] == "":
+                         return (row, col)
+                     else:
+                         continue
+                 else:
+                     return (row,col)
     
     def check_win_for_board(self, board, player):
         for row in range(-2,5):
@@ -111,7 +149,7 @@ class CheatingTicTacToe:
                         if all(board[row+i][col-i] == player for i in range(-2,3) if (0 <= (row + i) < 3 and 0<= (col - i) < 3)):
                             return True
         return False
-    
+
     def check_win(self):
         if self.check_win_for_board(self.board, self.player):
             self.game_over = True
@@ -135,6 +173,7 @@ class CheatingTicTacToe:
                   self.board[row][col] = ""
                   self.buttons[row][col].config(text="")
         self.game_over = False
+        self.moves = 0
 
 def main():
     root = tk.Tk()
