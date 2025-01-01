@@ -1,7 +1,7 @@
 import random
 
 def fun_game():
-    print("Welcome to Rock, Paper, Scissors! (The computer is cheating...)")
+    print("Welcome to Rock, Paper, Scissors!")
     print("Choose one of the following:")
     print("1. Rock")
     print("2. Paper")
