@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Canvas with Pen, Eraser, Color & Size</title>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; background-color: #f0f0f0; }
+    button { position: absolute; z-index: 10; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let eraser = false;  // Default tool is pen
+    let lastX = 0;
+    let lastY = 0;
+
+    // Set canvas dimensions
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Set default drawing color and line width
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+
+    // Start drawing
+    canvas.addEventListener('mousedown', (e) => {
+      drawing = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+    });
+
+    // Stop drawing
+    canvas.addEventListener('mouseup', () => {
+      drawing = false;
+    });
+
+    // Draw while mouse is moving (if drawing)
+    canvas.addEventListener('mousemove', (e) => {
+      if (drawing) {
+        draw(lastX, lastY, e.clientX, e.clientY);
+        lastX = e.clientX;
+        lastY = e.clientY;
+      }
+    });
+
+    // Draw function (pen or eraser)
+    function draw(x1, y1, x2, y2) {
+      if (eraser) {
+        ctx.globalCompositeOperation = 'destination-out'; // Erase mode
+        ctx.strokeStyle = 'rgba(0,0,0,1)'; // Eraser will be white (background color)
+      } else {
+        ctx.globalCompositeOperation = 'source-over'; // Normal drawing mode
+      }
+      
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    // Enable pen tool
+    function setPen() {
+      eraser = false;
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    // Enable eraser tool
+    function setEraser() {
+      eraser = true;
+    }
+
+    // Clear canvas
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Change pen size
+    function changePenSize(size) {
+      ctx.lineWidth = size;
+    }
+
+    // Change pen color
+    function changePenColor(color) {
+      ctx.strokeStyle = color;
+    }
+
+    // Add touch support (for mobile devices)
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault(); // Prevent scrolling
+      drawing = true;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+    });
+
+    canvas.addEventListener('touchend', () => {
+      drawing = false;
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (drawing) {
+        e.preventDefault(); // Prevent scrolling
+        draw(lastX, lastY, e.touches[0].clientX, e.touches[0].clientY);
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+      }
+    });
+
+    // Resize canvas on window resize (to maintain full screen)
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Add Pen tool button
+    const penButton = document.createElement('button');
+    penButton.textContent = 'Pen';
+    penButton.style.top = '10px';
+    penButton.style.left = '10px';
+    penButton.addEventListener('click', setPen);
+    document.body.appendChild(penButton);
+
+    // Add Eraser tool button
+    const eraserButton = document.createElement('button');
+    eraserButton.textContent = 'Eraser';
+    eraserButton.style.top = '10px';
+    eraserButton.style.left = '80px';
+    eraserButton.addEventListener('click', setEraser);
+    document.body.appendChild(eraserButton);
+
+    // Add Clear All button
+    const clearButton = document.createElement('button');
+    clearButton.textContent = 'Clear All';
+    clearButton.style.top = '10px';
+    clearButton.style.left = '160px';
+    clearButton.addEventListener('click', clearCanvas);
+    document.body.appendChild(clearButton);
+
+    // Add Pen Size button
+    const penSizeLabel = document.createElement('label');
+    penSizeLabel.textContent = 'Pen Size:';
+    penSizeLabel.style.top = '10px';
+    penSizeLabel.style.left = '240px';
+    document.body.appendChild(penSizeLabel);
+
+    const penSizeSelect = document.createElement('select');
+    penSizeSelect.style.top = '30px';
+    penSizeSelect.style.left = '320px';
+    penSizeSelect.innerHTML = `
+      <option value="5">Small</option>
+      <option value="10">Medium</option>
+      <option value="15">Large</option>
+    `;
+    penSizeSelect.addEventListener('change', (e) => changePenSize(Number(e.target.value)));
+    document.body.appendChild(penSizeSelect);
+
+    // Add Color Picker button
+    const colorLabel = document.createElement('label');
+    colorLabel.textContent = 'Pen Color:';
+    colorLabel.style.top = '10px';
+    colorLabel.style.left = '420px';
+    document.body.appendChild(colorLabel);
+
+    const colorPicker = document.createElement('input');
+    colorPicker.type = 'color';
+    colorPicker.style.top = '30px';
+    colorPicker.style.left = '500px';
+    colorPicker.addEventListener('input', (e) => changePenColor(e.target.value));
+    document.body.appendChild(colorPicker);
+  </script>
+</body>
+</html>
