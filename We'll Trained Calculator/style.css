@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f0f0;
+}
+
+.calculator {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 320px;
+}
+
+.display {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.joke-display {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#result {
+    width: 100%;
+    height: 60px;
+    border: none;
+    background: #f8f8f8;
+    font-size: 24px;
+    text-align: right;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    padding: 15px;
+    font-size: 20px;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.btn:hover {
+    background: #e0e0e0;
+}
+
+.operator {
+    background: #ffd700;
+}
+
+.equals {
+    background: #ff9500;
+    color: white;
+}
+
+.clear {
+    background: #ff3b30;
+    color: white;
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+/* Animation classes */
+.run-away {
+    transition: transform 0.2s ease-out;
+}
+
+.falling {
+    animation: fall 1s forwards;
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    75% { transform: translateX(5px) rotate(5deg); }
+}
+
+/* Easter egg animations */
+.rainbow-text {
+    animation: rainbow 2s linear infinite;
+}
+
+@keyframes rainbow {
+    0% { color: red; }
+    20% { color: orange; }
+    40% { color: yellow; }
+    60% { color: green; }
+    80% { color: blue; }
+    100% { color: purple; }
+}
