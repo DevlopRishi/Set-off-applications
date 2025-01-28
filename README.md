@@ -44,4 +44,4 @@ Good question. Short answer: **for the memes**. Long answer: **to learn new stuf
 ### Final Thoughts
 This repo is like life: messy, unpredictable, and full of bugs. But hey, at least it’s entertaining.
 
-Enjoy the chaos! ✌️
+Enjoy the chaos! *Evil laughter* ✌️
