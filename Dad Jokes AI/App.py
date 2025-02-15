@@ -2,8 +2,9 @@ import google.generativeai as genai
 import random
 import time
 
-# Replace 'YOUR_API_KEY' with your actual API key
+ API key
 API_KEY = "YOUR_API_KEY"
+# Replace 'YOUR_API_KEY' with your actual
 
 def dad_joke_ai():
     """A Dad Joke AI that uses Gemini API."""
