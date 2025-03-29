@@ -38,7 +38,7 @@ Good question. Short answer: **for the memes**. Long answer: **to learn new stuf
 ## Disclaimer ⚠️
 - Use this code at your own risk. 
 - I am not responsible for any tears, rage quits, or existential crises caused by this repo.
-- If this breaks your computer, consider it a sign to touch grass. :) 😜 
+- If this breaks your computer, consider it a sign to touch grass. :) 😜 😁 😁 
 
 ---
 ### Final Thoughts
