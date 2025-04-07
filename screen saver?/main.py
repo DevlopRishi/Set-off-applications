@@ -1,7 +1,7 @@
 import turtle
 import random
 
-# Initialize turtle
+# Initialize turtle with the help of this code
 screen = turtle.Screen()
 screen.bgcolor("black")
 screen.title("Random Things")
