@@ -1,0 +1,48 @@
+import random
+
+class Character:
+    def __init__(self, name, health, attack_power):
+        self.name = name
+        self.health = health
+        self.attack_power = attack_power
+
+    def attack(self, opponent):
+        damage = random.randint(1, self.attack_power)
+        opponent.health -= damage
+        return damage
+
+def display_status(player, monster):
+    print(f"{player.name}: {player.health} HP")
+    print(f"{monster.name}: {monster.health} HP\n")
+
+def rpg_game():
+    print("Welcome to the Dummy RPG Game!")
+    print("You will battle against a monster. May the best fighter win!")
+    
+    # Create player and monster characters
+    player = Character(name="Player", health=100, attack_power=20)
+    monster = Character(name="Monster", health=80, attack_power=15)
+    
+    # Game loop
+    while player.health > 0 and monster.health > 0:
+        display_status(player, monster)
+        
+        # Player's turn
+        input("Press Enter to attack!")
+        damage = player.attack(monster)
+        print(f"You attacked the monster and dealt {damage} damage.")
+        
+        if monster.health <= 0:
+            print("You defeated the monster! Congratulations!")
+            break
+        
+        # Monster's turn
+        damage = monster.attack(player)
+        print(f"The monster attacked you and dealt {damage} damage.")
+        
+        if player.health <= 0:
+            print("You were defeated by the monster. Better luck next time!")
+            break
+    
+if __name__ == "__main__":
+    rpg_game()
