@@ -21,7 +21,7 @@ def fun_game():
     
     print(f"You chose: {choices[user_choice]}")
 
-#Ayee, Don't peek here
+#Ayee, Don't peek here 🫣🫣
 
     totally_not_cheat_choice = (user_choice + 1) % 3
     print(f"Computer chose: {choices[totally_not_cheat_choice]}")
