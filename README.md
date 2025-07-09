@@ -1,6 +1,6 @@
 # Welcome to **Set-off-Applications**
 
-So you found your way here, huh? Either you're lost child, curious, or just looking for entertainment disguised as "learning." Well, you've come to the right place!!! (maby not) 
+So you found your way here, huh? Either you're lost child, curious, or just looking for entertainment disguised as "learning." Well, you've come to the right place! (maby not) 
 
 ## What's this mess about? 🤔
 This is my glorious (and slightly chaotic) collection of small, random projects. Think of it as your brain a pile of junk drawer but with code. I'm using this as a playground to mess around, learn new stuff, and maybe (just maybe) create something that's *actually* useful. 
